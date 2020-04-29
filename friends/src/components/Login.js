@@ -1,5 +1,6 @@
 import React from 'react';
-import axios from 'axios';
+
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 class Login extends React.Component {
   state = {
@@ -20,6 +21,14 @@ class Login extends React.Component {
 
   login = e => {
     e.preventDefault();
+    axiosWithAuth()
+      .post("/login", this.state.credentials)
+      .then(res => {
+        console.log(res);
+        localStorage.setItem("token", res.data.payload);
+        this.props.history.push("/friends");
+      })
+      .catch(err => console.error(err));
   };
 
   render() {
@@ -34,7 +43,7 @@ class Login extends React.Component {
             onChange={this.handleChange}
           />
           <input
-            type="text"
+            type="password"
             name="password"
             value={this.state.credentials.password}
             placeholder="password"
