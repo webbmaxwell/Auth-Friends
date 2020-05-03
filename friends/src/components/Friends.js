@@ -3,10 +3,12 @@ import PrivateRoute from './PrivateRoute.js';
 
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
-class Friends extends React.Component {
-  state = {
-    friends: []
-  };
+const Friends = () => {
+  const [friends, setFriends] = useState([])
+
+  axiosWithAuth()
+    .get("http://localhost:5000/api/data")
+}
 
   componentDidMount() {
     this.getData();
@@ -23,11 +25,9 @@ class Friends extends React.Component {
     .catch(err => console.error(err)
   )};
 
-  render() {
     return(
       <h1>Friends</h1>
     )
-  }
 };
 
 export default Friends;
